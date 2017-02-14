@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>yomatwit</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="new-twit" class="container">
+      <h3>yomatwit</h3></br>
+      <textarea class="form-control" rows="3"></textarea>
+      </br>
+      <button type="button" class="btn btn-info pull-right" onclick=newTwit()>Submit</button>
+    </div>
+    <div id="twits" class="container">
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $.ajax({
+        url  : "http://localhost:3000",
+        type : "GET",
+        success: function(result) {
+          result.forEach(function(data) {
+            $('#twits').append(`<blockquote><p>${data.text}</p><footer><cite title="Source Title">${data.user.screen_name}</cite></footer></blockquote>`)
+          })
+        }
+    })
+  })
+
+  function newTwit() {
+    $(document).ready(function(){
+      $.ajax({
+        url  : "http://localhost:3000/new-twit",
+        type : "POST",
+        data: {
+          twit: $('textarea').val()
+        },
+        success: function(result) {
+          $('#twits').prepend(`<blockquote><p>${result.text}</p><footer>Another twit from <cite title="Source Title">${result.user.screen_name}</cite></footer></blockquote>`)
+        }
+      })
+    })
+  }
+    </script>
+  </body>
+</html>
