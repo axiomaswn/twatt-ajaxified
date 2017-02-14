@@ -16,11 +16,17 @@ var client = new Twit({
   access_token_secret:  config.access_token_secret,
 })
 
-router.get('/tweet', function(req,res,next){
-  let quer = {status: req.query.q}
-  client.post('statuses/update', quer, function(error, data, response) {
+router.get('/', function(req,res,next){
+  let quer = {screen_name:req.query.q}
+  client.get('statuses/user_timeline',quer , function(error, data, response) {
     if (error) throw error;
   res.send(data)
+  })
+})
+
+router.get('/tweet', function(req,res,next){
+  client.post('statuses/update', {status: req.body.twit}, function(error, twit, response) {
+  res.send(twit)
   })
 })
 
