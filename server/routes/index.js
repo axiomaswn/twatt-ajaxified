@@ -14,9 +14,7 @@ var client = new Twit({
 })
 
 router.get('/', function(req,res,next){
-  let quer = {screen_name:req.query.q}
-  client.get('statuses/user_timeline',quer , function(error, data, response) {
-    if (error) throw error;
+    client.get('statuses/user_timeline',{screen_name:req.query.q} , function(error, data, response) {
   res.send(data)
   })
 })
