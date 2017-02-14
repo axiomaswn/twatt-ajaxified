@@ -3,9 +3,6 @@ var router = express.Router();
 var config = require('../config.json')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Welcome yomatwit' });
-});
 
 var Twit = require('twit')
 
@@ -24,9 +21,9 @@ router.get('/', function(req,res,next){
   })
 })
 
-router.get('/tweet', function(req,res,next){
-  client.post('statuses/update', {status: req.body.twit}, function(error, twit, response) {
-  res.send(twit)
+router.post('/new-twit', function(req, res, next) {
+  client.post('statuses/update', {status: req.body.twit}, function (error, twit, response) {
+    res.send(twit)
   })
 })
 
