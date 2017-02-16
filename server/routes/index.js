@@ -1,16 +1,17 @@
 var express = require('express');
 var router = express.Router();
 var config = require('../config.json')
+require('dotenv').config();
 
 /* GET home page. */
 
 var Twit = require('twit')
 
 var client = new Twit({
-  consumer_key:         config.consumer_key,
-  consumer_secret:      config.consumer_secret,
-  access_token:         config.access_token,
-  access_token_secret:  config.access_token_secret,
+  consumer_key:         process.env.consumer_key,
+  consumer_secret:      process.env.consumer_secret,
+  access_token:         process.env.access_token,
+  access_token_secret:  process.env.access_token_secret
 })
 
 router.get('/', function(req,res,next){
